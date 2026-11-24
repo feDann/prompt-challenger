@@ -1,0 +1,6 @@
+{
+  "name": "prompt-challenger",
+  "version": "0.1.0",
+  "description": "Challenges a prompt before Claude executes it: finds ambiguities, asks only blocking questions, proposes a sharper version.",
+  "author": { "name": "fridanco" }
+}

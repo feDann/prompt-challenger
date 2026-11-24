@@ -1,0 +1,16 @@
+{
+  "description": "Inject the prompt-challenger gatekeeper process on every non-trivial prompt.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/prompt-challenger.sh\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

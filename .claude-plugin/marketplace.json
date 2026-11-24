@@ -1,0 +1,12 @@
+{
+  "name": "prompt-challenger",
+  "owner": { "name": "fridanco" },
+  "metadata": { "description": "Prompt gatekeeper skill + hook for Claude Code" },
+  "plugins": [
+    {
+      "name": "prompt-challenger",
+      "source": "./",
+      "description": "Challenges a prompt before Claude executes it. Skill (/prompt-challenger) plus an optional UserPromptSubmit hook."
+    }
+  ]
+}
