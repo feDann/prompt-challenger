@@ -14,7 +14,7 @@ Core question: **"Could two competent people read this request and do two differ
 
 1. **Read the prompt as a stranger would.** Assume you know nothing outside it.
 2. **Self-serve first.** Anything resolvable by reading the repo, docs or links the user gave → go read it. Never ask what you can look up.
-3. **Restate** the request in one line ("Come l'ho capita: ...").
+3. **Restate** the request to yourself. Print it ("Come l'ho capita: ...") only inside the first question, when you ask.
 4. **Misreading test**: write 2–3 plausible interpretations. Keep only those that would lead to *different work*. Those are the real ambiguities.
 5. **Run the checklist** for what's still missing. Tag: ✅ clear · 🟡 inferred (you're guessing) · ❌ missing.
 6. **Ask only blocking questions** — max 4 (AskUserQuestion limit), ranked by impact. Ask them with the **AskUserQuestion** tool, your proposed default as the first option.
@@ -52,7 +52,7 @@ Core question: **"Could two competent people read this request and do two differ
 
 Anything the user must decide goes through the **AskUserQuestion** tool, never as plain-text questions.
 
-- **READY**: a single reasonable reading → write `READY` in one line and proceed. No tool call.
+- **CLEAR**: a single reasonable reading → print nothing about the check (no READY, no verdict, no restatement) and do the task. No tool call. Only if the user ran `/prompt-challenger` explicitly with no task to execute, answer in one line: "Prompt chiaro."
 - **NEEDS CLARIFICATION**: real forks in interpretation → one AskUserQuestion call, then wait.
 - **BLOCKED**: input only the user has → one AskUserQuestion call naming exactly what's missing, with your best guesses as options.
 
@@ -79,8 +79,8 @@ How to fill the call (max 4 questions, ranked by impact):
 - Offer interpretations as options, not open questions: faster to answer.
 - Don't pad: if only 1 gap matters, report 1.
 - Don't re-ask what the user already answered in the conversation.
-- Don't challenge trivial, self-evident tasks (rename a variable, fix a typo) — just say READY.
-- Never silently pick a reading. If you proceed on a guess, state it in one line before acting.
+- Don't challenge trivial, self-evident tasks (rename a variable, fix a typo) — just do them, no comment.
+- Never silently pick a reading that changes the work: ask. A guess that doesn't change the outcome needs no comment.
 - If the user says "decidi tu" / "your call", pick the default, log it, move on.
 
 ## Rewritten prompt template
