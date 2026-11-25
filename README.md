@@ -16,7 +16,7 @@ Two parts, installed together:
 
 Requires `jq` (the hook does nothing without it).
 
-Questions are asked with the `AskUserQuestion` tool: pick an option (default first, marked "Recommended") instead of typing an answer.
+Clear prompt: Claude prints nothing about the check and does the task. Only when something is ambiguous it asks, with the `AskUserQuestion` tool: pick an option (default first, marked "Recommended") instead of typing an answer.
 
 ## Hook behavior
 
