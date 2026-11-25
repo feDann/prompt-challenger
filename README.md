@@ -16,6 +16,8 @@ Two parts, installed together:
 
 Requires `jq` (the hook does nothing without it).
 
+Questions are asked with the `AskUserQuestion` tool: pick an option (default first, marked "Recommended") instead of typing an answer.
+
 ## Hook behavior
 
 Skipped when the prompt:

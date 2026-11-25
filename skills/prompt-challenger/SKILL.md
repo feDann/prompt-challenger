@@ -17,7 +17,7 @@ Core question: **"Could two competent people read this request and do two differ
 3. **Restate** the request in one line ("Come l'ho capita: ...").
 4. **Misreading test**: write 2–3 plausible interpretations. Keep only those that would lead to *different work*. Those are the real ambiguities.
 5. **Run the checklist** for what's still missing. Tag: ✅ clear · 🟡 inferred (you're guessing) · ❌ missing.
-6. **Ask only blocking questions** — max 5, ranked by impact. Each = one line + your proposed default, so the user can answer "ok" / "A".
+6. **Ask only blocking questions** — max 4 (AskUserQuestion limit), ranked by impact. Ask them with the **AskUserQuestion** tool, your proposed default as the first option.
 7. **After the answers**, output a rewritten prompt (short, copy-pasteable). Ask whether to proceed.
 
 ## Misreading test — red flags
@@ -50,36 +50,37 @@ Core question: **"Could two competent people read this request and do two differ
 
 ## Output format
 
-```
-Verdict: READY | NEEDS CLARIFICATION | BLOCKED
+Anything the user must decide goes through the **AskUserQuestion** tool, never as plain-text questions.
 
-Come l'ho capita: <one line>
+- **READY**: a single reasonable reading → write `READY` in one line and proceed. No tool call.
+- **NEEDS CLARIFICATION**: real forks in interpretation → one AskUserQuestion call, then wait.
+- **BLOCKED**: input only the user has → one AskUserQuestion call naming exactly what's missing, with your best guesses as options.
 
-Letture alternative
-A) <reading> → <what I'd do>
-B) <reading> → <what I'd do>
-Quale? (default: A)
+How to fill the call (max 4 questions, ranked by impact):
 
-Altri gap
-1. <dimension> — <what's unclear> → default: <proposal>
+| Element | AskUserQuestion field |
+|---|---|
+| Alternative readings A/B | One question. One option per reading: `label` = short reading, `description` = what I'd do |
+| Gap from the checklist | One question. 2–4 concrete answers as options |
+| Your proposed default | First option, `label` ends with "(Recommended)" |
+| Assumptions if the user accepts the default | In the `description` of the Recommended option |
+| Free-text answer | Automatic "Other". Don't add it |
 
-Assumptions se dici "go"
-- ...
-```
-
-- **READY**: a single reasonable reading → say so in one line and proceed (or ask "go?").
-- **NEEDS CLARIFICATION**: real forks in interpretation → ask, wait.
-- **BLOCKED**: can't proceed without a decision/input only the user has → say exactly which.
+- Each question must stand alone: the dialog can hide your earlier text. Put the one-line restatement ("Come l'ho capita: ...") at the start of the first question.
+- `header` max 12 chars ("Scope", "Output", "Autonomia").
+- Same language as the user.
+- `multiSelect: true` only when the options aren't mutually exclusive.
+- No `preview`.
 
 ## Rules
 
 - Challenge the prompt, not the person. No lectures on prompt-writing theory.
 - Only flag ambiguity that **changes the outcome**. If every reading yields the same work, it's clear — don't ask.
-- Offer interpretations as A/B choices; they're faster to answer than open questions.
+- Offer interpretations as options, not open questions: faster to answer.
 - Don't pad: if only 1 gap matters, report 1.
 - Don't re-ask what the user already answered in the conversation.
 - Don't challenge trivial, self-evident tasks (rename a variable, fix a typo) — just say READY.
-- Never silently pick a reading. If you proceed on a guess, list it under Assumptions.
+- Never silently pick a reading. If you proceed on a guess, state it in one line before acting.
 - If the user says "decidi tu" / "your call", pick the default, log it, move on.
 
 ## Rewritten prompt template
